@@ -35,7 +35,7 @@ def handle_client(client_socket):
 
 def start_server():
     host = '127.1.0.1'
-    port = 4321
+    port = 5000
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((host, port))
