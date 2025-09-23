@@ -1,0 +1,19 @@
+Step 1: Get the Virtual machine software
+
+    - Download and install VirtualBox from virtualbox.org.
+    - Download the Windows 10 ISO file from the Microsoft website.
+
+Step 2: Create a virtual machine (VM)
+
+    - Open VirtualBox and click the "New" button.
+    - Name your VM and choose the Windows 10 ISO file.
+    - Set the RAM to at least 6 GB and assign at least two CPU cores.
+    - Create a virtual hard disk of at least 50 GB.
+
+Step 3: Install Windows 10
+
+    - Start the VM you created.
+    - Follow the on-screen Windows setup.
+    - Click "Install now" and then "I don't have a product key".
+    - Choose a custom installation and select the virtual hard disk.
+    - Wait for the installation to finish and complete the initial setup.
