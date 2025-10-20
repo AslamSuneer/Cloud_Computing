@@ -1,9 +1,10 @@
 import socket
 import threading
 
-clients = {} 
+clients = {}  # Stores client_socket:username
 
 def broadcast(message, sender_socket=None):
+    """Send message to all clients except the sender."""
     for client_sock in clients:
         if client_sock != sender_socket:
             try:
@@ -13,6 +14,7 @@ def broadcast(message, sender_socket=None):
 
 def handle_client(client_socket):
     try:
+        # Receive username
         username = client_socket.recv(1024).decode()
         clients[client_socket] = username
         broadcast(f"{username} has joined the chat.", client_socket)
@@ -33,14 +35,14 @@ def handle_client(client_socket):
         del clients[client_socket]
 
 def start_server():
-    host = '127.1.0.1'
+    host = '127.0.0.1'
     port = 5000
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((host, port))
     server.listen()
 
-    print(f"[SERVER STARTED] Connecting>>>{host}:{port}")
+    print(f"[SERVER STARTED] Listening on {host}:{port}")
 
     while True:
         client_sock, _ = server.accept()
