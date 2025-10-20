@@ -1,0 +1,29 @@
+Start Google App Engine environment in your computer and create a simple one-page web application.
+
+Algorithm:
+
+1.Start.
+
+2.Download Google App Engine SDK from Python official page.
+
+3.Install the SDK which also installs App Engine and related tools.
+
+4.Install Python 2.7 and configure its path.
+
+5.Open App Engine Launcher from Start Menu.
+
+6.Create a new project:
+
+  -Click File and create new application.
+  -Select your project folder.
+  -Make sure your folder has app.yaml, app.py.
+
+7.Set Python path to Python 2.7 path.
+
+8.Click Start on the launcher.
+
+9.Open web browser and go to http://localhost:8080.
+
+10.This will show the web app that we have created.
+
+11.Stop the server.
