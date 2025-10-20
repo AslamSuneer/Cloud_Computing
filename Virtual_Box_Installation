@@ -1,0 +1,30 @@
+Install Oracle VirtualBox on top of Ubuntu OS and set up a Virtual Machine of Windows 10 flavor.
+
+Algorithm:
+
+1.Start.
+
+2.First, make sure that Windows Ubuntu is up-to-date:
+  -sudo apt update
+  -sudo apt upgrade
+
+3.Install the required dependencies:
+  -sudo apt install -y wget software-properties-common
+
+4.Add Oracle VirtualBox Open Keys:
+  -wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+
+5.Add Oracle VirtualBox repository:
+  -sudo add-apt-repository "deb [arch=amd64] https://download.virtualbox.org/virtualbox/debian $$(lsb_release -sc) contrib"
+
+6.Install Virtual Box:
+  -sudo apt install virtualbox-7.0 (Based on the handwritten note: sudo apt install virtualbox-7.0)
+
+7.Download Windows 10 ISO from Microsoft official website.
+
+8.Create Virtual Machine for Windows 10:
+  -Open Virtual Box.
+  -Click 'New' to create a new Virtual Machine.
+  -Allocate resources (CPU, RAM, storage).
+  -Choose the Windows 10 ISO.
+  -Check start and begin Windows 10 installation.
