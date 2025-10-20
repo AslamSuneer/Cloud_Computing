@@ -100,7 +100,7 @@ class ChatClient:
                 f.write(modified_content)
 
             msg = f"updated: replaced '{word_to_replace}' with '{replacement_word}' in {filepath}"
-            self.insert_message(f"✅ {msg}", "right")
+            self.insert_message(f" {msg}", "right")
             self.client_socket.send(msg.encode())
 
         except Exception as e:
@@ -115,7 +115,7 @@ class ChatClient:
         count = len(content)
 
         msg = f"analyzed: character count {count} in {filepath}"
-        self.insert_message(f"📊 {msg}", "right")
+        self.insert_message(f" {msg}", "right")
         self.client_socket.send(msg.encode())
 
     # ------------------ 3. Line Count ------------------ #
@@ -126,7 +126,7 @@ class ChatClient:
             lines = f.readlines()
 
         msg = f"analyzed: line count {len(lines)} in {filepath}"
-        self.insert_message(f"📊 {msg}", "right")
+        self.insert_message(f" {msg}", "right")
         self.client_socket.send(msg.encode())
 
     # ------------------ 4. Frequent Words ------------------ #
@@ -139,7 +139,7 @@ class ChatClient:
         top_5 = freq.most_common(5)
 
         msg = f"analyzed: top 5 frequent words {top_5} in {filepath}"
-        self.insert_message(f"🔥 {msg}", "right")
+        self.insert_message(f" {msg}", "right")
         self.client_socket.send(msg.encode())
 
     # ------------------ 5. Sort Data ------------------ #
@@ -153,7 +153,7 @@ class ChatClient:
             f.writelines(lines_sorted)
 
         msg = f"updated: sorted file {filepath} alphabetically"
-        self.insert_message(f"✅ {msg}", "right")
+        self.insert_message(f" {msg}", "right")
         self.client_socket.send(msg.encode())
 
     # ------------------ 6. Stats (Sum/Average/Min/Max) ------------------ #
@@ -170,7 +170,7 @@ class ChatClient:
             mx = max(numbers)
 
             msg = f"analyzed: stats Sum={s}, Avg={avg:.2f}, Min={mn}, Max={mx} in {filepath}"
-            self.insert_message(f"📈 {msg}", "right")
+            self.insert_message(f" {msg}", "right")
             self.client_socket.send(msg.encode())
         except Exception as e:
             messagebox.showerror("File Error", f"Not numeric data: {e}")
