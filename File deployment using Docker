@@ -1,0 +1,50 @@
+AIM:Implement a single-page greeting web application and deploy it using Docker.
+
+Theory/Key Concepts (Partial Algorithm):
+The text provides an explanation of Docker and key concepts, which are prerequisites to the algorithm. The actual deployment steps (algorithm) are not fully visible or explicitly listed but the experiment summary suggests the following commands would be part of it:
+
+-docker build: Create docker image.
+-docker run: Start a container from an image.
+-docker ps: Shows which containers are currently running.
+-docker stop: Stops the running container.
+-docker rm: Remove the stopped container.
+-docker push: Upload a docker image to a repository.
+-docker pull: Download an image from repository.
+-Docker Image:Read-only temp. for creating containers.
+-Docker File:A script containing implicit code to create docker images.
+-Docker Hub:Cloud based repository to upload and show docker images.
+-Kubernetes:integration helps in the management of containers.
+
+Implied Steps for Deployment (Not explicitly numbered in the images):
+1.Create the web application file (e.g., index.html).
+2.Create a Dockerfile containing instructions to build the image.
+3.Build the Docker image using the Dockerfile (e.g., docker build -t <tagname> .).
+4.Run the container from the image (e.g., docker run -d -p 8080:80 <tagname>).
+
+ALGORITHM:
+1.Start.
+2.Ensure that the system is up-to-date.
+3.Install docker dependencies.
+4.Install docker engine.
+5.Create a folder and create your app inside it.
+6.Inside the same folder add a dockerfile.
+7.Build the app inside a container.
+8.Run the Docker container.
+9.Test the application.
+10.Stop and remove the container.
+11.Stop.
+
+
+COMMANDS:
+-sudo apt-get update
+-sudo apt-get install ca-certificates curl gnupg lsb-release (Note: gnupg lsb-release is partially visible but contextually necessary)
+-sudo install -m 0755 -d /etc/apt/keyrings
+-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg (Note: The command is split and slightly abbreviated in the handwriting; this is the complete standard command)
+-sudo chmod a+r /etc/apt/keyrings/docker.gpg
+-echo \ "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \ $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null (Note: This is the full standard command for adding the repository)
+-sudo apt-get update
+-sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+-sudo systemctl status docker
+-docker build -t myapp .
+-docker run -d -p 8080:8080 myapp-container
+-docker stop myapp-container
