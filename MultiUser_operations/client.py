@@ -86,25 +86,23 @@ class ChatClient:
     # ------------------ 1. Replace Word ------------------ #
     def replace_word(self):
         filepath = filedialog.askopenfilename(title="Select File")
-        if not filepath:
-            return
+        if not filepath: return
 
         word_to_replace = simpledialog.askstring("Word to Replace", "Enter the word to replace:")
         replacement_word = simpledialog.askstring("Replacement Word", "Enter the replacement word:")
-
-        if not word_to_replace or replacement_word is None:
-            return
+        if not word_to_replace or replacement_word is None: return
 
         try:
             with open(filepath, 'r') as f:
                 content = f.read()
-
             modified_content = content.replace(word_to_replace, replacement_word)
-
             with open(filepath, 'w') as f:
                 f.write(modified_content)
 
-            self.insert_message(f"✅ Replaced '{word_to_replace}' with '{replacement_word}' in {filepath}", "right")
+            msg = f"updated: replaced '{word_to_replace}' with '{replacement_word}' in {filepath}"
+            self.insert_message(f"✅ {msg}", "right")
+            self.client_socket.send(msg.encode())
+
         except Exception as e:
             messagebox.showerror("Error", str(e))
 
@@ -112,54 +110,56 @@ class ChatClient:
     def char_count(self):
         filepath = filedialog.askopenfilename(title="Select File")
         if not filepath: return
-
         with open(filepath, 'r') as f:
             content = f.read()
-
         count = len(content)
-        self.insert_message(f"📊 Character Count in {filepath}: {count}", "right")
+
+        msg = f"analyzed: character count {count} in {filepath}"
+        self.insert_message(f"📊 {msg}", "right")
+        self.client_socket.send(msg.encode())
 
     # ------------------ 3. Line Count ------------------ #
     def line_count(self):
         filepath = filedialog.askopenfilename(title="Select File")
         if not filepath: return
-
         with open(filepath, 'r') as f:
             lines = f.readlines()
 
-        self.insert_message(f"📊 Line Count in {filepath}: {len(lines)}", "right")
+        msg = f"analyzed: line count {len(lines)} in {filepath}"
+        self.insert_message(f"📊 {msg}", "right")
+        self.client_socket.send(msg.encode())
 
-    # ------------------ 4. Find Frequent Words ------------------ #
+    # ------------------ 4. Frequent Words ------------------ #
     def frequent_words(self):
         filepath = filedialog.askopenfilename(title="Select File")
         if not filepath: return
-
         with open(filepath, 'r') as f:
             words = f.read().split()
-
         freq = Counter(words)
         top_5 = freq.most_common(5)
-        self.insert_message(f"🔥 Top 5 Frequent Words in {filepath}: {top_5}", "right")
+
+        msg = f"analyzed: top 5 frequent words {top_5} in {filepath}"
+        self.insert_message(f"🔥 {msg}", "right")
+        self.client_socket.send(msg.encode())
 
     # ------------------ 5. Sort Data ------------------ #
     def sort_data(self):
         filepath = filedialog.askopenfilename(title="Select File")
         if not filepath: return
-
         with open(filepath, 'r') as f:
             lines = f.readlines()
-
         lines_sorted = sorted(lines)
         with open(filepath, 'w') as f:
             f.writelines(lines_sorted)
 
-        self.insert_message(f"✅ Sorted file '{filepath}' alphabetically", "right")
+        msg = f"updated: sorted file {filepath} alphabetically"
+        self.insert_message(f"✅ {msg}", "right")
+        self.client_socket.send(msg.encode())
 
     # ------------------ 6. Stats (Sum/Average/Min/Max) ------------------ #
     def stats_numbers(self):
         filepath = filedialog.askopenfilename(title="Select Numeric File")
         if not filepath: return
-
         try:
             with open(filepath, 'r') as f:
                 numbers = [float(x) for x in f.read().split()]
@@ -169,7 +169,9 @@ class ChatClient:
             mn = min(numbers)
             mx = max(numbers)
 
-            self.insert_message(f"📈 Stats for {filepath}:\nSum={s}, Avg={avg:.2f}, Min={mn}, Max={mx}", "right")
+            msg = f"analyzed: stats Sum={s}, Avg={avg:.2f}, Min={mn}, Max={mx} in {filepath}"
+            self.insert_message(f"📈 {msg}", "right")
+            self.client_socket.send(msg.encode())
         except Exception as e:
             messagebox.showerror("File Error", f"Not numeric data: {e}")
 
@@ -177,13 +179,12 @@ class ChatClient:
     def on_closing(self):
         try:
             self.client_socket.close()
-        except:
-            pass
+        except: pass
         self.master.quit()
+
 
 if __name__ == "__main__":
     root = tk.Tk()
     client = ChatClient(root)
     root.protocol("WM_DELETE_WINDOW", client.on_closing)
     root.mainloop()
-
