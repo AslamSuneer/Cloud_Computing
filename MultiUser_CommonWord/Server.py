@@ -4,6 +4,9 @@ import threading
 clients = {}  # client_socket:username
 last_messages = {}  # client_socket:last_message
 
+# ----------------------- Optional Client Limit -----------------------
+# MAX_CLIENTS = 2  # Uncomment to limit number of clients
+
 def broadcast(message, sender_socket=None):
     for client_sock in clients:
         if client_sock != sender_socket:
@@ -26,7 +29,6 @@ def handle_client(client_socket):
                 break
 
             # Update last message
-            prev_message = last_messages.get(client_socket, "")
             last_messages[client_socket] = message
 
             # Find common words with other clients
@@ -62,7 +64,16 @@ def start_server():
     print(f"[SERVER STARTED] Listening on {host}:{port}")
 
     while True:
-        client_sock, _ = server.accept()
+        client_sock, addr = server.accept()
+
+        # ---------------- Optional Client Limit Check ----------------
+        # Uncomment the following block to limit clients to MAX_CLIENTS
+        # if 'MAX_CLIENTS' in globals() and len(clients) >= MAX_CLIENTS:
+        #     client_sock.send("Server full. Only 2 clients allowed.".encode())
+        #     client_sock.close()
+        #     print(f"[REJECTED] Connection from {addr} - Server full")
+        #     continue
+
         threading.Thread(target=handle_client, args=(client_sock,), daemon=True).start()
 
 if __name__ == "__main__":
