@@ -175,7 +175,7 @@ class ChatClient:
         except Exception as e:
             messagebox.showerror("File Error", f"Not numeric data: {e}")
 
-    # ------------------ Closing Function ------------------ #
+    # ------------------ Closing Function -------------------#
     def on_closing(self):
         try:
             self.client_socket.close()
