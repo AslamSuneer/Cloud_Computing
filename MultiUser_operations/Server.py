@@ -3,7 +3,6 @@ import threading
 
 clients = {}  # Stores client_socket:username
 
-
 def broadcast(message, sender_socket=None):
     """Send message to all clients except the sender."""
     for client_sock in clients:
@@ -13,10 +12,8 @@ def broadcast(message, sender_socket=None):
             except:
                 client_sock.close()
 
-
 def handle_client(client_socket):
     try:
-        # Receive username
         username = client_socket.recv(1024).decode()
         clients[client_socket] = username
         broadcast(f"{username} has joined the chat.", client_socket)
@@ -27,16 +24,24 @@ def handle_client(client_socket):
             if not message:
                 break
 
-            # ------------------- OPTIONAL: DISPLAY ALL OPERATIONS ON SERVER -------------------
-            # Uncomment any of the below lines to see the corresponding output on server:
-            #
-            # print(f"[CHAT MESSAGE] {username}: {message}")                     # Show all chat text
-            # if "updated:" in message: print(f"[FILE UPDATE] {username}: {message}")  # Show file update details
-            # if "deleted:" in message: print(f"[FILE DELETE] {username}: {message}")  # Show file delete messages
-            # if "renamed" in message: print(f"[FILE RENAME] {username}: {message}")   # Show file rename messages
-            # if "appended" in message: print(f"[FILE APPEND] {username}: {message}")  # Show file append messages
-            # -------------------------------------------------------------------------------
+            # ------------------- Server Logging of Operations -------------------
+            # Show chat messages
+            print(f"[CHAT] {username}: {message}")
 
+            # Show file operations if any
+            if message.startswith("updated:"):
+                print(f"[FILE UPDATE] {username}: {message}")
+            elif message.startswith("analyzed:"):
+                print(f"[FILE ANALYSIS] {username}: {message}")
+            elif message.startswith("deleted:"):
+                print(f"[FILE DELETE] {username}: {message}")
+            elif message.startswith("renamed:"):
+                print(f"[FILE RENAME] {username}: {message}")
+            elif message.startswith("appended:"):
+                print(f"[FILE APPEND] {username}: {message}")
+            # -------------------------------------------------------------------
+
+            # Broadcast original message to other clients
             broadcast(f"{username}: {message}", client_socket)
 
     except:
@@ -47,7 +52,6 @@ def handle_client(client_socket):
         broadcast(f"{username} has left the chat.", client_socket)
         client_socket.close()
         clients.pop(client_socket, None)
-
 
 def start_server():
     host = '127.0.0.1'
@@ -62,7 +66,6 @@ def start_server():
     while True:
         client_sock, _ = server.accept()
         threading.Thread(target=handle_client, args=(client_sock,), daemon=True).start()
-
 
 if __name__ == "__main__":
     start_server()
