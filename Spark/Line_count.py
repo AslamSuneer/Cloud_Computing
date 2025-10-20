@@ -1,0 +1,5 @@
+spark = SparkSession.builder.appName("LineCount").getOrCreate()
+df = spark.read.text("input.txt")
+line_count = df.count()
+print("Number of lines:", line_count)
+spark.stop()
