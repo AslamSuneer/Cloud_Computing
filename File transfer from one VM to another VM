@@ -1,0 +1,15 @@
+Algorithm :
+1.Create a folder to share. (Seems to be a general heading)
+2.Start. (Seems to be a general heading)
+3.Create two VMs, VM1 and VM2 in VirtualBox.
+4.Create a new folder to share on your host machine.
+5.Place any files you want to share inside this folder.
+6.Open VBox Manager and select Settings ->Shared folders -> add new shared folder.
+7.Repeat the same for VM2.
+8.Start both VM1 and VM2.
+9.Ensure that the Guest Additions are installed on both VMs.
+10.In both VMs, open File Explorer and Navigate to Network.
+11.The shared folder will appear as \\VBoxSvr\sharedData.
+12.Copy any file from VM1 to shared folder.
+13.The file will immediately appear in VM2 and vice versa.
+14.Stop.
